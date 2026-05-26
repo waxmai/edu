@@ -1,0 +1,48 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+/edu-schedule-system
+/migrate
+*.exe
+*.test
+*.out
+coverage.out
+/dist/
+/build/
+
+# Frontend generated artifacts and dependencies
+/frontend/web/node_modules/
+/frontend/web/dist/
+/frontend/web/coverage/
+/frontend/web/*.tsbuildinfo
+/frontend/web/src/**/*.js
+/frontend/web/src/**/*.js.map
+/frontend/web/vite.config.js
+/frontend/web/vite.config.d.ts
+
+# Logs and runtime data
+logs/
+*.log
+tmp/
+
+# IDE/editor files
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+edu-schedule-system
+private/
+
+# Runtime backup artifacts
+output/
+
+# Local AI/tooling scratch spaces
+.trash/
+.learnings/

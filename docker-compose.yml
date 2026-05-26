@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  edu-schedule-system:
+    build: .
+    command: ["./edu-schedule-system", "-env", "dev", "-config", "/app/configs/dev_configs.toml"]
+    ports:
+      - "9999:9999"
+    environment:
+      - GIN_MODE=release
+      - JWT_SECRET=${JWT_SECRET:-dev-secret-local-only-change-me}
+      - SERVER_PORT=:9999
+      - MYSQL_READ_ADDR=mysql:3306
+      - MYSQL_READ_USER=app
+      - MYSQL_READ_PASS=app
+      - MYSQL_READ_NAME=edu-schedule-system
+      - MYSQL_WRITE_ADDR=mysql:3306
+      - MYSQL_WRITE_USER=app
+      - MYSQL_WRITE_PASS=app
+      - MYSQL_WRITE_NAME=edu-schedule-system
+      - REDIS_ADDR=redis:6379
+      - REDIS_PASS=
+      - REDIS_DB=0
+      - SWAGGER_ENABLED=true
+      - PPROF_ENABLED=true
+      - METRICS_ENABLED=true
+      - AUTH_TEMPLATE_TOKEN_ENABLED=false
+      - BOOTSTRAP_PLATFORM_ADMIN_PASSWORD=${BOOTSTRAP_PLATFORM_ADMIN_PASSWORD:-}
+      - BOOTSTRAP_ORG_ADMIN_PASSWORD=${BOOTSTRAP_ORG_ADMIN_PASSWORD:-}
+      - BOOTSTRAP_CAMPUS_ADMIN_PASSWORD=${BOOTSTRAP_CAMPUS_ADMIN_PASSWORD:-}
+      - BOOTSTRAP_TEACHER_PASSWORD=${BOOTSTRAP_TEACHER_PASSWORD:-}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:9999/system/ready || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks:
+      - edu-schedule-network
+
+  migrate:
+    build: .
+    command: ["./migrate", "-env", "dev", "-config", "/app/configs/dev_configs.toml", "-bootstrap"]
+    environment:
+      - JWT_SECRET=${JWT_SECRET:-dev-secret-local-only-change-me}
+      - MYSQL_WRITE_ADDR=mysql:3306
+      - MYSQL_WRITE_USER=app
+      - MYSQL_WRITE_PASS=app
+      - MYSQL_WRITE_NAME=edu-schedule-system
+      - MYSQL_READ_ADDR=mysql:3306
+      - MYSQL_READ_USER=app
+      - MYSQL_READ_PASS=app
+      - MYSQL_READ_NAME=edu-schedule-system
+      - REDIS_ADDR=redis:6379
+      - BOOTSTRAP_PLATFORM_ADMIN_PASSWORD=${BOOTSTRAP_PLATFORM_ADMIN_PASSWORD:-}
+      - BOOTSTRAP_ORG_ADMIN_PASSWORD=${BOOTSTRAP_ORG_ADMIN_PASSWORD:-}
+      - BOOTSTRAP_CAMPUS_ADMIN_PASSWORD=${BOOTSTRAP_CAMPUS_ADMIN_PASSWORD:-}
+      - BOOTSTRAP_TEACHER_PASSWORD=${BOOTSTRAP_TEACHER_PASSWORD:-}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - edu-schedule-network
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=edu-schedule-system
+      - MYSQL_USER=app
+      - MYSQL_PASSWORD=app
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uapp -papp --silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks:
+      - edu-schedule-network
+
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks:
+      - edu-schedule-network
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - edu-schedule-network
+
+networks:
+  edu-schedule-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

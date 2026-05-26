@@ -1,0 +1,80 @@
+name: production-gate
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+      - main
+      - master
+
+jobs:
+  backend-production-gate:
+    runs-on: ubuntu-latest
+    env:
+      AUTH_MODE: required
+      AUTH_TEMPLATE_TOKEN_ENABLED: "false"
+      JWT_SECRET: ${{ secrets.PROD_READINESS_JWT_SECRET }}
+      AUTH_REFRESH_TOKEN_TTL_SECONDS: "604800"
+      AUTH_MIN_PASSWORD_LENGTH: "8"
+      AUTH_PASSWORD_COMPLEXITY: strong
+      SWAGGER_ENABLED: "false"
+      PPROF_ENABLED: "false"
+      LOG_LEVEL: info
+      DEBUG: "false"
+      CORS_ALLOWED_ORIGINS: ${{ secrets.PROD_CORS_ALLOWED_ORIGINS }}
+      AUTH_RECOVERY_DELIVERY_MODE: email
+      AUTH_RECOVERY_DELIVERY_EMAIL_HOST: ${{ secrets.PROD_SMTP_HOST }}
+      AUTH_RECOVERY_DELIVERY_EMAIL_USERNAME: ${{ secrets.PROD_SMTP_USERNAME }}
+      AUTH_RECOVERY_DELIVERY_EMAIL_PASSWORD: ${{ secrets.PROD_SMTP_PASSWORD }}
+      AUTH_RECOVERY_DELIVERY_EMAIL_FROM: ${{ secrets.PROD_SMTP_FROM }}
+      AUTH_RECOVERY_PREVIEW_ENABLED: "false"
+      MYSQL_READ_ADDR: ${{ secrets.PROD_MYSQL_READ_ADDR }}
+      MYSQL_WRITE_ADDR: ${{ secrets.PROD_MYSQL_WRITE_ADDR }}
+      MYSQL_READ_USER: ${{ secrets.PROD_MYSQL_READ_USER }}
+      MYSQL_WRITE_USER: ${{ secrets.PROD_MYSQL_WRITE_USER }}
+      MYSQL_READ_NAME: ${{ secrets.PROD_MYSQL_READ_NAME }}
+      MYSQL_WRITE_NAME: ${{ secrets.PROD_MYSQL_WRITE_NAME }}
+      MYSQL_READ_PASS: ${{ secrets.PROD_MYSQL_READ_PASS }}
+      MYSQL_WRITE_PASS: ${{ secrets.PROD_MYSQL_WRITE_PASS }}
+      REDIS_ENABLED: "true"
+      REDIS_ADDR: ${{ secrets.PROD_REDIS_ADDR }}
+      BACKUP_ENABLED: "true"
+      BACKUP_RETENTION_DAYS: "30"
+      BACKUP_DIR: /var/backups/edu-schedule-system
+      LOG_DIR: /var/log/edu-schedule-system
+      ALERT_CHANNEL: feishu
+      ALERT_FEISHU_WEBHOOK: ${{ secrets.PROD_ALERT_FEISHU_WEBHOOK }}
+      PROD_BASE_URL: ${{ secrets.PROD_BASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/web/package-lock.json
+      - name: go vet
+        run: go vet ./...
+      - name: go test
+        run: go test ./... -cover
+      - name: go build
+        run: go build ./...
+      - name: generated files check
+        run: make generated-check
+      - name: frontend build
+        run: make frontend-build
+      - name: migration lint
+        run: make migration-lint
+      - name: production readiness check
+        run: bash scripts/prod_readiness_check.sh configs/pro_configs.toml
+      - name: dependency vulnerability check
+        continue-on-error: true
+        run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
+      - name: release backup gate
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: make release-backup-gate

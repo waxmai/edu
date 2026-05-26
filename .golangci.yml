@@ -1,0 +1,33 @@
+run:
+  timeout: 5m
+  tests: false
+
+linters:
+  disable-all: true
+  enable:
+    - govet
+    - errcheck
+    - staticcheck
+    - gosimple
+    - ineffassign
+    - typecheck
+    - unused
+    - goconst
+    - gocyclo
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude-dirs:
+    - docs
+  exclude-files:
+    - ".*\\.gen\\.go$"
+    - "wire_gen\\.go"

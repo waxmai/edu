@@ -1,0 +1,2841 @@
+basePath: /
+definitions:
+  admin.genResultInfo:
+    properties:
+      rows_affected:
+        type: integer
+    type: object
+  auth.ChangePasswordRequest:
+    properties:
+      newPassword:
+        type: string
+      oldPassword:
+        type: string
+    required:
+    - newPassword
+    - oldPassword
+    type: object
+  auth.CurrentUser:
+    properties:
+      campusId:
+        type: integer
+      campusName:
+        type: string
+      dataScope:
+        type: string
+      email:
+        type: string
+      featureFlags:
+        items:
+          type: string
+        type: array
+      id:
+        type: integer
+      menuPermissions:
+        items:
+          type: string
+        type: array
+      mustChangePassword:
+        type: boolean
+      organizationId:
+        type: integer
+      organizationName:
+        type: string
+      permissions:
+        items:
+          type: string
+        type: array
+      phone:
+        type: string
+      realName:
+        type: string
+      remark:
+        type: string
+      roleCode:
+        type: string
+      status:
+        type: string
+      subscriptionStatus:
+        type: string
+      username:
+        type: string
+    type: object
+  auth.LoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  auth.LoginResponse:
+    properties:
+      expiresIn:
+        type: integer
+      refreshToken:
+        type: string
+      session:
+        $ref: '#/definitions/auth.SessionInfo'
+      token:
+        type: string
+      tokenType:
+        type: string
+      userInfo:
+        $ref: '#/definitions/auth.CurrentUser'
+    type: object
+  auth.PasswordRecoveryResetRequest:
+    properties:
+      challengeId:
+        type: string
+      newPassword:
+        type: string
+      secondFactorCode:
+        type: string
+      verificationCode:
+        type: string
+    required:
+    - challengeId
+    - newPassword
+    - verificationCode
+    type: object
+  auth.PasswordRecoveryResetResponse:
+    properties:
+      recoveredAt:
+        type: string
+      recoveryChallengeId:
+        type: string
+      requiresFreshLogin:
+        type: boolean
+      revokedSessionCount:
+        type: integer
+      success:
+        type: boolean
+    type: object
+  auth.PasswordRecoveryStartRequest:
+    properties:
+      channel:
+        type: string
+      secondFactorChannel:
+        type: string
+      username:
+        type: string
+    required:
+    - channel
+    - username
+    type: object
+  auth.PasswordRecoveryStartResponse:
+    properties:
+      accepted:
+        type: boolean
+      challengeId:
+        type: string
+      expiresIn:
+        type: integer
+      message:
+        type: string
+      primaryChannel:
+        type: string
+      primaryTargetMasked:
+        type: string
+      riskFlags:
+        items:
+          type: string
+        type: array
+      secondFactorChannel:
+        type: string
+      secondFactorRequired:
+        type: boolean
+      secondTargetMasked:
+        type: string
+    type: object
+  auth.RefreshRequest:
+    properties:
+      refreshToken:
+        type: string
+    required:
+    - refreshToken
+    type: object
+  auth.SessionInfo:
+    properties:
+      campusId:
+        type: integer
+      clientIP:
+        type: string
+      createdAt:
+        type: string
+      current:
+        type: boolean
+      deviceId:
+        type: string
+      deviceName:
+        type: string
+      id:
+        type: string
+      lastRefreshedAt:
+        type: string
+      lastSeenAt:
+        type: string
+      organizationId:
+        type: integer
+      revokedAt:
+        type: string
+      revokedReason:
+        type: string
+      riskFlags:
+        items:
+          type: string
+        type: array
+      roleCode:
+        type: string
+      status:
+        type: string
+      suspicious:
+        type: boolean
+      updatedAt:
+        type: string
+      userAgent:
+        type: string
+    type: object
+  auth.SessionListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/auth.SessionInfo'
+        type: array
+      total:
+        type: integer
+    type: object
+  code.Failure:
+    properties:
+      code:
+        description: 业务码
+        type: integer
+      message:
+        description: 描述信息
+        type: string
+    type: object
+  course.genResultInfo:
+    properties:
+      rows_affected:
+        type: integer
+    type: object
+  dto.AdminCreateRequest:
+    properties:
+      mobile:
+        type: string
+      username:
+        type: string
+    required:
+    - mobile
+    - username
+    type: object
+  dto.AdminResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      mobile:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.AdminUpdateRequest:
+    additionalProperties: true
+    type: object
+  dto.CourseCreateRequest:
+    properties:
+      courseName:
+        type: string
+      courseType:
+        type: string
+      durationMinutes:
+        type: integer
+      feeStandard:
+        type: number
+      remark:
+        type: string
+      status:
+        type: string
+      subject:
+        type: string
+    required:
+    - courseName
+    - courseType
+    - subject
+    type: object
+  dto.CourseResponse:
+    properties:
+      courseName:
+        type: string
+      courseType:
+        type: string
+      createdAt:
+        type: string
+      durationMinutes:
+        type: integer
+      feeStandard:
+        type: number
+      id:
+        type: integer
+      remark:
+        type: string
+      status:
+        type: string
+      subject:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dto.CourseUpdateRequest:
+    additionalProperties: true
+    type: object
+  dto.LessonPackageCreateRequest:
+    properties:
+      courseId:
+        type: integer
+      endDate:
+        type: string
+      lowLessonThreshold:
+        type: number
+      paidAmount:
+        type: number
+      remainLessons:
+        type: number
+      remark:
+        type: string
+      startDate:
+        type: string
+      status:
+        type: string
+      studentId:
+        type: integer
+      totalAmount:
+        type: number
+      totalLessons:
+        type: number
+      usedLessons:
+        type: number
+    required:
+    - courseId
+    - studentId
+    - totalLessons
+    type: object
+  dto.LessonPackageResponse:
+    properties:
+      arrearsAmount:
+        type: number
+      courseId:
+        type: integer
+      courseName:
+        type: string
+      createdAt:
+        type: string
+      endDate:
+        type: string
+      id:
+        type: integer
+      lowLessonAlert:
+        type: boolean
+      lowLessonThreshold:
+        type: number
+      paidAmount:
+        type: number
+      remainLessons:
+        type: number
+      remark:
+        type: string
+      startDate:
+        type: string
+      status:
+        type: string
+      studentId:
+        type: integer
+      studentName:
+        type: string
+      subject:
+        type: string
+      totalAmount:
+        type: number
+      totalLessons:
+        type: number
+      updatedAt:
+        type: string
+      usedLessons:
+        type: number
+    type: object
+  dto.LessonPackageUpdateRequest:
+    additionalProperties: true
+    type: object
+  dto.LessonRecordCreateRequest:
+    properties:
+      attendanceStatus:
+        type: string
+      deductLessonCount:
+        type: number
+      feedback:
+        type: string
+      homework:
+        type: string
+      lessonContent:
+        type: string
+      lessonDeducted:
+        type: boolean
+      needDeductLesson:
+        type: boolean
+      scheduleId:
+        type: integer
+      studentId:
+        type: integer
+      teacherId:
+        type: integer
+    required:
+    - attendanceStatus
+    - scheduleId
+    - studentId
+    - teacherId
+    type: object
+  dto.LessonRecordResponse:
+    properties:
+      attendanceStatus:
+        type: string
+      deductLessonCount:
+        type: number
+      feedback:
+        type: string
+      homework:
+        type: string
+      id:
+        type: integer
+      lessonContent:
+        type: string
+      lessonDeducted:
+        type: boolean
+      recordedAt:
+        type: string
+      scheduleId:
+        type: integer
+      studentId:
+        type: integer
+      studentName:
+        type: string
+      teacherId:
+        type: integer
+      teacherName:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dto.LessonRecordUpdateRequest:
+    additionalProperties: true
+    type: object
+  dto.MakeupScheduleCreateRequest:
+    properties:
+      classDate:
+        type: string
+      classroom:
+        type: string
+      courseId:
+        type: integer
+      endTime:
+        type: string
+      lessonPackageId:
+        type: integer
+      originalScheduleId:
+        type: integer
+      remark:
+        type: string
+      startTime:
+        type: string
+      studentId:
+        type: integer
+      teacherId:
+        type: integer
+    required:
+    - classDate
+    - courseId
+    - endTime
+    - originalScheduleId
+    - startTime
+    - studentId
+    - teacherId
+    type: object
+  dto.PaymentIncomeStatsResponse:
+    properties:
+      recordCount:
+        type: integer
+      totalAmount:
+        type: number
+    type: object
+  dto.PaymentRecordCreateRequest:
+    properties:
+      amount:
+        type: number
+      lessonPackageId:
+        type: integer
+      paymentMethod:
+        type: string
+      paymentStatus:
+        type: string
+      paymentTime:
+        type: string
+      paymentType:
+        type: string
+      remark:
+        type: string
+      studentId:
+        type: integer
+    required:
+    - amount
+    - lessonPackageId
+    - paymentMethod
+    - paymentTime
+    - paymentType
+    - studentId
+    type: object
+  dto.PaymentRecordResponse:
+    properties:
+      amount:
+        type: number
+      courseName:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      lessonPackageId:
+        type: integer
+      lessonPackageName:
+        type: string
+      paymentMethod:
+        type: string
+      paymentStatus:
+        type: string
+      paymentTime:
+        type: string
+      paymentType:
+        type: string
+      remark:
+        type: string
+      studentId:
+        type: integer
+      studentName:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dto.PaymentRecordUpdateRequest:
+    additionalProperties: true
+    type: object
+  dto.RescheduleRecordCreateRequest:
+    properties:
+      newScheduleId:
+        type: integer
+      oldScheduleId:
+        type: integer
+      operationType:
+        type: string
+      operatorId:
+        type: integer
+      reason:
+        type: string
+    required:
+    - oldScheduleId
+    - operationType
+    type: object
+  dto.RescheduleRecordResponse:
+    properties:
+      createdAt:
+        type: string
+      id:
+        type: integer
+      newScheduleId:
+        type: integer
+      newScheduleSummary:
+        type: string
+      oldScheduleId:
+        type: integer
+      oldScheduleSummary:
+        type: string
+      operationType:
+        type: string
+      operatorId:
+        type: integer
+      operatorName:
+        type: string
+      reason:
+        type: string
+    type: object
+  dto.RescheduleRecordUpdateRequest:
+    additionalProperties: true
+    type: object
+  dto.ScheduleCancelRequest:
+    properties:
+      reason:
+        type: string
+    type: object
+  dto.ScheduleConflictResponse:
+    properties:
+      studentConflict:
+        type: boolean
+      teacherConflict:
+        type: boolean
+    type: object
+  dto.ScheduleCreateRequest:
+    properties:
+      classDate:
+        type: string
+      classroom:
+        type: string
+      courseId:
+        type: integer
+      endTime:
+        type: string
+      isMakeup:
+        type: boolean
+      lessonPackageId:
+        type: integer
+      originalScheduleId:
+        type: integer
+      remark:
+        type: string
+      scheduleStatus:
+        type: string
+      startTime:
+        type: string
+      studentId:
+        type: integer
+      teacherId:
+        type: integer
+    required:
+    - classDate
+    - courseId
+    - endTime
+    - startTime
+    - studentId
+    - teacherId
+    type: object
+  dto.ScheduleLeaveRequest:
+    properties:
+      reason:
+        type: string
+    type: object
+  dto.ScheduleRescheduleRequest:
+    properties:
+      classroom:
+        type: string
+      newClassDate:
+        type: string
+      newEndTime:
+        type: string
+      newStartTime:
+        type: string
+      reason:
+        type: string
+    required:
+    - newClassDate
+    - newEndTime
+    - newStartTime
+    type: object
+  dto.ScheduleResponse:
+    properties:
+      classDate:
+        type: string
+      classroom:
+        type: string
+      courseId:
+        type: integer
+      courseName:
+        type: string
+      createdAt:
+        type: string
+      endTime:
+        type: string
+      id:
+        type: integer
+      isMakeup:
+        type: boolean
+      lessonPackageId:
+        type: integer
+      lessonPackageName:
+        type: string
+      originalScheduleId:
+        type: integer
+      remark:
+        type: string
+      scheduleStatus:
+        type: string
+      startTime:
+        type: string
+      studentId:
+        type: integer
+      studentName:
+        type: string
+      teacherId:
+        type: integer
+      teacherName:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dto.ScheduleUpdateRequest:
+    additionalProperties: true
+    type: object
+  dto.StudentCreateRequest:
+    properties:
+      gender:
+        type: string
+      grade:
+        type: string
+      parentName:
+        type: string
+      parentPhone:
+        type: string
+      phone:
+        type: string
+      remark:
+        type: string
+      status:
+        type: string
+      studentName:
+        type: string
+      subject:
+        type: string
+      teachingType:
+        type: string
+    required:
+    - studentName
+    - subject
+    - teachingType
+    type: object
+  dto.StudentResponse:
+    properties:
+      createdAt:
+        type: string
+      gender:
+        type: string
+      grade:
+        type: string
+      id:
+        type: integer
+      parentName:
+        type: string
+      parentPhone:
+        type: string
+      phone:
+        type: string
+      remark:
+        type: string
+      status:
+        type: string
+      studentName:
+        type: string
+      subject:
+        type: string
+      teachingType:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  dto.StudentUpdateRequest:
+    additionalProperties: true
+    type: object
+  lesson_package.genResultInfo:
+    properties:
+      rows_affected:
+        type: integer
+    type: object
+  lesson_record.genResultInfo:
+    properties:
+      rows_affected:
+        type: integer
+    type: object
+  payment_record.genResultInfo:
+    properties:
+      rows_affected:
+        type: integer
+    type: object
+  reschedule_record.genResultInfo:
+    properties:
+      rows_affected:
+        type: integer
+    type: object
+  schedule.genResultInfo:
+    properties:
+      rows_affected:
+        type: integer
+    type: object
+  student.genResultInfo:
+    properties:
+      rows_affected:
+        type: integer
+    type: object
+  user.CreateRequest:
+    properties:
+      campusId:
+        type: integer
+      email:
+        type: string
+      organizationId:
+        type: integer
+      password:
+        type: string
+      phone:
+        type: string
+      realName:
+        type: string
+      remark:
+        type: string
+      roleCode:
+        type: string
+      status:
+        type: string
+      username:
+        type: string
+    required:
+    - realName
+    - roleCode
+    - username
+    type: object
+  user.ListResponse:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/user.UserItem'
+        type: array
+      total:
+        type: integer
+    type: object
+  user.ResetPasswordRequest:
+    properties:
+      newPassword:
+        type: string
+    type: object
+  user.UpdateRequest:
+    properties:
+      campusId:
+        type: integer
+      email:
+        type: string
+      organizationId:
+        type: integer
+      password:
+        type: string
+      phone:
+        type: string
+      realName:
+        type: string
+      remark:
+        type: string
+      roleCode:
+        type: string
+      status:
+        type: string
+      username:
+        type: string
+    required:
+    - realName
+    - roleCode
+    - username
+    type: object
+  user.UpdateStatusRequest:
+    properties:
+      status:
+        type: string
+    required:
+    - status
+    type: object
+  user.UserItem:
+    properties:
+      campusId:
+        type: integer
+      createdAt:
+        type: string
+      email:
+        type: string
+      failedLoginCount:
+        type: integer
+      id:
+        type: integer
+      lastPasswordChangedAt:
+        type: string
+      lockedUntil:
+        type: string
+      mustChangePassword:
+        type: boolean
+      organizationId:
+        type: integer
+      phone:
+        type: string
+      realName:
+        type: string
+      remark:
+        type: string
+      roleCode:
+        type: string
+      status:
+        type: string
+      updatedAt:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: Edu Schedule System 接口文档
+  version: v0.0.1
+paths:
+  /api/v1/admin:
+    post:
+      consumes:
+      - application/json
+      description: 新增数据
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AdminCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增数据
+      tags:
+      - Table.admin
+  /api/v1/admin/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据 ID 删除数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/admin.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 删除数据
+      tags:
+      - Table.admin
+    get:
+      consumes:
+      - application/json
+      description: 根据 ID 获取数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.AdminResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 获取数据
+      tags:
+      - Table.admin
+    put:
+      consumes:
+      - application/json
+      description: 根据 ID 更新数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.AdminUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/admin.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 更新数据
+      tags:
+      - Table.admin
+  /api/v1/admins:
+    get:
+      consumes:
+      - application/json
+      description: 获取列表数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.AdminResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取列表数据
+      tags:
+      - Table.admin
+  /api/v1/auth/change-password:
+    post:
+      consumes:
+      - application/json
+      description: 用于首次登录强制改密，也可用于当前登录用户主动修改密码。
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/auth.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.CurrentUser'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 修改当前用户密码
+      tags:
+      - Auth
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: 使用 sys_user 用户表进行正式登录，签发 JWT。
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 正式账号密码登录
+      tags:
+      - Auth
+  /api/v1/auth/logout:
+    post:
+      consumes:
+      - application/json
+      description: 撤销当前 access token，并在提供 refresh token 时一并使其失效。
+      parameters:
+      - description: 可选 refresh token
+        in: header
+        name: X-Refresh-Token
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 当前用户登出
+      tags:
+      - Auth
+  /api/v1/auth/logout-all:
+    post:
+      consumes:
+      - application/json
+      description: 撤销当前用户的全部会话，包含当前 access token 对应会话。
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 注销全部其他会话
+      tags:
+      - Auth
+  /api/v1/auth/me:
+    get:
+      consumes:
+      - application/json
+      description: 返回当前会话对应的用户信息。
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.CurrentUser'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取当前登录用户信息
+      tags:
+      - Auth
+  /api/v1/auth/password-recovery/reset:
+    post:
+      consumes:
+      - application/json
+      description: 校验恢复挑战后重置密码，并撤销历史会话。
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/auth.PasswordRecoveryResetRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.PasswordRecoveryResetResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 完成密码恢复并重置密码
+      tags:
+      - Auth
+  /api/v1/auth/password-recovery/start:
+    post:
+      consumes:
+      - application/json
+      description: 通过预设恢复渠道发起找回密码挑战。
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/auth.PasswordRecoveryStartRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.PasswordRecoveryStartResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 发起密码恢复
+      tags:
+      - Auth
+  /api/v1/auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: 使用 refresh token 刷新 access token，并复用当前会话。
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/auth.RefreshRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 刷新访问令牌
+      tags:
+      - Auth
+  /api/v1/auth/sessions:
+    get:
+      consumes:
+      - application/json
+      description: 返回当前用户的可见登录会话列表。
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/auth.SessionListResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 列出当前用户会话
+      tags:
+      - Auth
+  /api/v1/auth/sessions/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 撤销当前用户名下的指定会话。
+      parameters:
+      - description: 会话ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 撤销指定会话
+      tags:
+      - Auth
+  /api/v1/course:
+    post:
+      consumes:
+      - application/json
+      description: 新增数据
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CourseCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增数据
+      tags:
+      - Table.course
+  /api/v1/course/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据 ID 删除数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/course.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 删除数据
+      tags:
+      - Table.course
+    get:
+      consumes:
+      - application/json
+      description: 根据 ID 获取数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.CourseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 获取数据
+      tags:
+      - Table.course
+    put:
+      consumes:
+      - application/json
+      description: 根据 ID 更新数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CourseUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/course.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 更新数据
+      tags:
+      - Table.course
+  /api/v1/courses:
+    get:
+      consumes:
+      - application/json
+      description: 获取列表数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.CourseResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取列表数据
+      tags:
+      - Table.course
+  /api/v1/lesson-records:
+    get:
+      consumes:
+      - application/json
+      description: 按业务查询条件返回上课记录列表，支持按学员、教师、出勤状态和日期范围筛选。
+      parameters:
+      - description: 学员ID
+        in: query
+        name: studentId
+        type: integer
+      - description: 教师ID
+        in: query
+        name: teacherId
+        type: integer
+      - description: 出勤状态
+        in: query
+        name: attendanceStatus
+        type: string
+      - description: 开始日期，格式 2006-01-02
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期，格式 2006-01-02
+        in: query
+        name: endDate
+        type: string
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.LessonRecordResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 上课记录列表
+      tags:
+      - Business.lesson_record
+  /api/v1/lesson_package:
+    post:
+      consumes:
+      - application/json
+      description: 新增数据
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LessonPackageCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增数据
+      tags:
+      - Table.lesson_package
+  /api/v1/lesson_package/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据 ID 删除数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lesson_package.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 删除数据
+      tags:
+      - Table.lesson_package
+    get:
+      consumes:
+      - application/json
+      description: 根据 ID 获取数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.LessonPackageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 获取数据
+      tags:
+      - Table.lesson_package
+    put:
+      consumes:
+      - application/json
+      description: 根据 ID 更新数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LessonPackageUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lesson_package.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 更新数据
+      tags:
+      - Table.lesson_package
+  /api/v1/lesson_packages:
+    get:
+      consumes:
+      - application/json
+      description: 获取列表数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.LessonPackageResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取列表数据
+      tags:
+      - Table.lesson_package
+  /api/v1/lesson_record:
+    post:
+      consumes:
+      - application/json
+      description: 新增数据
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LessonRecordCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增数据
+      tags:
+      - Table.lesson_record
+  /api/v1/lesson_record/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据 ID 删除数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lesson_record.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 删除数据
+      tags:
+      - Table.lesson_record
+    get:
+      consumes:
+      - application/json
+      description: 根据 ID 获取数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.LessonRecordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 获取数据
+      tags:
+      - Table.lesson_record
+    put:
+      consumes:
+      - application/json
+      description: 根据 ID 更新数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LessonRecordUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/lesson_record.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 更新数据
+      tags:
+      - Table.lesson_record
+  /api/v1/lesson_records:
+    get:
+      consumes:
+      - application/json
+      description: 获取列表数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.LessonRecordResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取列表数据
+      tags:
+      - Table.lesson_record
+  /api/v1/makeup-schedules:
+    post:
+      consumes:
+      - application/json
+      description: 基于原排课创建补课，并生成对应调补课记录。
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.MakeupScheduleCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/dto.ScheduleConflictResponse'
+      security:
+      - BearerAuth: []
+      summary: 创建补课排课
+      tags:
+      - Business.schedule
+  /api/v1/payment-records:
+    get:
+      consumes:
+      - application/json
+      description: 按业务查询条件返回缴费记录列表，支持按学员、课时包、缴费类型、状态、方式和日期范围筛选。
+      parameters:
+      - description: 学员ID
+        in: query
+        name: studentId
+        type: integer
+      - description: 课时包ID
+        in: query
+        name: lessonPackageId
+        type: integer
+      - description: 缴费类型
+        in: query
+        name: paymentType
+        type: string
+      - description: 缴费状态
+        in: query
+        name: paymentStatus
+        type: string
+      - description: 支付方式
+        in: query
+        name: paymentMethod
+        type: string
+      - description: 开始日期，格式 2006-01-02
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期，格式 2006-01-02
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.PaymentRecordResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 缴费记录列表
+      tags:
+      - Business.payment_record
+  /api/v1/payment_record:
+    post:
+      consumes:
+      - application/json
+      description: 新增数据
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PaymentRecordCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增数据
+      tags:
+      - Table.payment_record
+  /api/v1/payment_record/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据 ID 删除数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/payment_record.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 删除数据
+      tags:
+      - Table.payment_record
+    get:
+      consumes:
+      - application/json
+      description: 根据 ID 获取数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.PaymentRecordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 获取数据
+      tags:
+      - Table.payment_record
+    put:
+      consumes:
+      - application/json
+      description: 根据 ID 更新数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PaymentRecordUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/payment_record.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 更新数据
+      tags:
+      - Table.payment_record
+  /api/v1/payment_records:
+    get:
+      consumes:
+      - application/json
+      description: 获取列表数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.PaymentRecordResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取列表数据
+      tags:
+      - Table.payment_record
+  /api/v1/reschedule-records:
+    get:
+      consumes:
+      - application/json
+      description: 按学员、操作类型和日期范围查询调补课记录。
+      parameters:
+      - description: 学员ID
+        in: query
+        name: studentId
+        type: integer
+      - description: 操作类型
+        in: query
+        name: operationType
+        type: string
+      - description: 开始日期，格式 2006-01-02
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期，格式 2006-01-02
+        in: query
+        name: endDate
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.RescheduleRecordResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 调补课记录列表
+      tags:
+      - Business.reschedule_record
+  /api/v1/reschedule_record:
+    post:
+      consumes:
+      - application/json
+      description: 新增数据
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RescheduleRecordCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增数据
+      tags:
+      - Table.reschedule_record
+  /api/v1/reschedule_record/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据 ID 删除数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/reschedule_record.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 删除数据
+      tags:
+      - Table.reschedule_record
+    get:
+      consumes:
+      - application/json
+      description: 根据 ID 获取数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.RescheduleRecordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 获取数据
+      tags:
+      - Table.reschedule_record
+    put:
+      consumes:
+      - application/json
+      description: 根据 ID 更新数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RescheduleRecordUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/reschedule_record.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 更新数据
+      tags:
+      - Table.reschedule_record
+  /api/v1/reschedule_records:
+    get:
+      consumes:
+      - application/json
+      description: 获取列表数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.RescheduleRecordResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取列表数据
+      tags:
+      - Table.reschedule_record
+  /api/v1/schedule:
+    post:
+      consumes:
+      - application/json
+      description: 新增数据
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ScheduleCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增数据
+      tags:
+      - Table.schedule
+  /api/v1/schedule/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据 ID 删除数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schedule.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 删除数据
+      tags:
+      - Table.schedule
+    get:
+      consumes:
+      - application/json
+      description: 根据 ID 获取数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ScheduleResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 获取数据
+      tags:
+      - Table.schedule
+    put:
+      consumes:
+      - application/json
+      description: 根据 ID 更新数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ScheduleUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schedule.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 更新数据
+      tags:
+      - Table.schedule
+  /api/v1/schedules:
+    get:
+      consumes:
+      - application/json
+      description: 获取列表数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.ScheduleResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取列表数据
+      tags:
+      - Table.schedule
+  /api/v1/schedules/{id}/cancel:
+    patch:
+      consumes:
+      - application/json
+      description: 将指定排课取消，并写入取消原因。
+      parameters:
+      - description: 排课ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ScheduleCancelRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/schedule.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 取消排课
+      tags:
+      - Business.schedule
+  /api/v1/schedules/{id}/leave:
+    post:
+      consumes:
+      - application/json
+      description: 将排课标记为请假，并生成调补课记录。
+      parameters:
+      - description: 排课ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ScheduleLeaveRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 学员请假
+      tags:
+      - Business.schedule
+  /api/v1/schedules/{id}/reschedule:
+    post:
+      consumes:
+      - application/json
+      description: 基于原排课创建新的排课时间，并生成调课记录。
+      parameters:
+      - description: 原排课ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ScheduleRescheduleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/dto.ScheduleConflictResponse'
+      security:
+      - BearerAuth: []
+      summary: 调课
+      tags:
+      - Business.schedule
+  /api/v1/statistics/income:
+    get:
+      consumes:
+      - application/json
+      description: 按日期范围聚合缴费记录收入统计。
+      parameters:
+      - description: 开始日期，格式 2006-01-02
+        in: query
+        name: startDate
+        type: string
+      - description: 结束日期，格式 2006-01-02
+        in: query
+        name: endDate
+        type: string
+      - description: 分组粒度
+        in: query
+        name: groupBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.PaymentIncomeStatsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 收入统计
+      tags:
+      - Business.payment_record
+  /api/v1/student:
+    post:
+      consumes:
+      - application/json
+      description: 新增数据
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.StudentCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增数据
+      tags:
+      - Table.student
+  /api/v1/student/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 根据 ID 删除数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/student.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 删除数据
+      tags:
+      - Table.student
+    get:
+      consumes:
+      - application/json
+      description: 根据 ID 获取数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.StudentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 获取数据
+      tags:
+      - Table.student
+    put:
+      consumes:
+      - application/json
+      description: 根据 ID 更新数据
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.StudentUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/student.genResultInfo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 根据 ID 更新数据
+      tags:
+      - Table.student
+  /api/v1/students:
+    get:
+      consumes:
+      - application/json
+      description: 获取列表数据
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.StudentResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 获取列表数据
+      tags:
+      - Table.student
+  /api/v1/users:
+    get:
+      consumes:
+      - application/json
+      description: 查询系统用户列表，支持平台/机构/校区分级管理视角。
+      parameters:
+      - description: 用户名
+        in: query
+        name: username
+        type: string
+      - description: 姓名
+        in: query
+        name: realName
+        type: string
+      - description: 角色编码
+        in: query
+        name: roleCode
+        type: string
+      - description: 机构ID
+        in: query
+        name: organizationId
+        type: integer
+      - description: 校区ID
+        in: query
+        name: campusId
+        type: integer
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页数量
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.ListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 用户列表
+      tags:
+      - Users
+    post:
+      consumes:
+      - application/json
+      description: 新增 sys_user，支持平台/机构/校区分级管理。
+      parameters:
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/user.CreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 新增用户
+      tags:
+      - Users
+  /api/v1/users/{id}:
+    put:
+      consumes:
+      - application/json
+      description: 修改 sys_user，支持平台/机构/校区分级管理。
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 修改用户
+      tags:
+      - Users
+  /api/v1/users/{id}/reset-password:
+    post:
+      consumes:
+      - application/json
+      description: 重置指定用户密码，并强制其下次登录改密。必须显式提供新密码，支持平台/机构/校区分级管理。
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        schema:
+          $ref: '#/definitions/user.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 重置用户密码
+      tags:
+      - Users
+  /api/v1/users/{id}/status:
+    patch:
+      consumes:
+      - application/json
+      description: 修改 sys_user 状态，支持平台/机构/校区分级管理。
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 请求参数
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateStatusRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 修改用户状态
+      tags:
+      - Users
+  /api/v1/users/{id}/unlock:
+    post:
+      consumes:
+      - application/json
+      description: 清空失败登录计数并解除锁定，支持平台/机构/校区分级管理。
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - BearerAuth: []
+      summary: 解锁用户
+      tags:
+      - Users
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

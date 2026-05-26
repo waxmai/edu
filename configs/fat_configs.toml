@@ -1,0 +1,68 @@
+[language]
+local = "zh-cn"
+
+[server]
+port = ":9999"
+maxBodyBytes = 1048576
+shutdownTimeoutSeconds = 10
+readHeaderTimeoutSeconds = 5
+readTimeoutSeconds = 10
+writeTimeoutSeconds = 15
+idleTimeoutSeconds = 60
+
+[mysql.read]
+addr = "127.0.0.1:3306"
+name = "edu-schedule-system"
+pass = ""
+user = "app"
+
+[mysql.write]
+addr = "127.0.0.1:3306"
+name = "edu-schedule-system"
+pass = ""
+user = "app"
+
+[mysql.pool]
+maxOpenConns = 100
+maxIdleConns = 5
+connMaxLifetimeSeconds = 120
+
+[redis]
+enabled = true
+addr = "127.0.0.1:6379"
+pass = ""
+db = 0
+
+[redis.pool]
+dialTimeoutSeconds = 5
+readTimeoutSeconds = 20
+writeTimeoutSeconds = 20
+poolSize = 50
+minIdleConns = 2
+poolTimeoutSeconds = 60
+
+[auth]
+mode = "required"
+templateTokenEnabled = false
+
+[auth.recoveryDelivery]
+mode = "placeholder"
+
+[mongo]
+uri = ""
+username = ""
+password = ""
+authSource = ""
+
+[jwt]
+secret = ""
+issuer = "example-issuer"
+audience = "example-audience"
+leewaySeconds = 60
+
+[aes]
+secret = ""
+
+[rsa]
+publicKey = ""
+privateKey = ""
