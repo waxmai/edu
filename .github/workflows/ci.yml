@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - dev
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/web/package-lock.json
+      - name: go vet
+        run: go vet ./...
+      - name: go test
+        run: go test ./... -cover
+      - name: go build
+        run: go build ./...
+      - name: generated files check
+        run: make generated-check
+      - name: frontend build
+        run: make frontend-build
+      - name: migration lint
+        run: make migration-lint
+      - name: dependency vulnerability check
+        continue-on-error: true
+        run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...

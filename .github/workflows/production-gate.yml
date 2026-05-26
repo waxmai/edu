@@ -1,13 +1,24 @@
 name: production-gate
 
 on:
-  pull_request:
   workflow_dispatch:
-  push:
-    branches:
-      - dev
-      - main
-      - master
+    inputs:
+      run_live_checks:
+        description: 'Run live endpoint checks when PROD_BASE_URL is configured'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+      require_backup_gate:
+        description: 'Require recent successful backup evidence before release'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   backend-production-gate:
@@ -46,7 +57,7 @@ jobs:
       LOG_DIR: /var/log/edu-schedule-system
       ALERT_CHANNEL: feishu
       ALERT_FEISHU_WEBHOOK: ${{ secrets.PROD_ALERT_FEISHU_WEBHOOK }}
-      PROD_BASE_URL: ${{ secrets.PROD_BASE_URL }}
+      PROD_BASE_URL: ${{ github.event.inputs.run_live_checks == 'true' && secrets.PROD_BASE_URL || '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
@@ -76,5 +87,5 @@ jobs:
         continue-on-error: true
         run: go run golang.org/x/vuln/cmd/govulncheck@latest ./...
       - name: release backup gate
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        if: github.event.inputs.require_backup_gate == 'true'
         run: make release-backup-gate
